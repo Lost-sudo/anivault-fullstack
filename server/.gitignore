@@ -1,0 +1,13 @@
+# Environment variables
+.env
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.out
+*.exe
+
+# Build files
+dist/

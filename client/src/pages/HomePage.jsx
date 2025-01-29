@@ -1,42 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Hero from "../components/Hero.jsx";
 import SwiperComponent from "../components/SwiperComponent.jsx";
 import axios from "axios";
+import Spinner from "../components/Spinner.jsx";
 
 const HomePage = () => {
+    const [animeData, setAnimeData] = useState([]);
+    const [mangaData, setMangaData] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const [animeData, setAnimeData] = React.useState([]);
-    const [mangaData, setMangaData] = React.useState([]);
-
-    console.log(animeData);
-
-    const fetchAnimeData = async () => {
-        await axios.get("http://localhost:3000/api/top/anime").
-        then((res) => setAnimeData(res.data)).
-        catch((err) => console.log("Error fetching data from the server: ", err));
+    // Fetch Anime and Manga Data in Parallel
+    const fetchData = async () => {
+        try {
+            const [animeRes, mangaRes] = await Promise.all([
+                axios.get("http://localhost:3000/api/top/anime"),
+                axios.get("http://localhost:3000/api/top/manga")
+            ]);
+            setAnimeData(animeRes.data);
+            setMangaData(mangaRes.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const fetchMangaData = async () => {
-        axios.get("http://localhost:3000/api/top/manga").
-        then((res) => setMangaData(res.data)).
-        catch((err) => console.log("Error fetching data from the server: ", err));
-    }
-
-    React.useEffect(() => {
-
-        fetchAnimeData();
-        fetchMangaData();
-
-    }, [])
-
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <section className="pt-20">
             <Hero />
-            <SwiperComponent data={animeData} title="Top Anime" description="Check out the latest and top-rated anime"/>
-            <SwiperComponent data={mangaData} title="Top Manga" description="Check out the latest and top-rated maga" />
+            {loading ? (
+                <Spinner />
+            ) : (
+                <>
+                    <SwiperComponent data={animeData} title="Top Anime" description="Check out the latest and top-rated anime" />
+                    <SwiperComponent data={mangaData} title="Top Manga" description="Check out the latest and top-rated manga" />
+                </>
+            )}
         </section>
-    )
+    );
 };
 
 export default HomePage;

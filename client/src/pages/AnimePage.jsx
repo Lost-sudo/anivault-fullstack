@@ -5,7 +5,7 @@ import axios from "axios";
 import Spinner from "../components/Spinner.jsx";
 
 const AnimePage = () => {
-    const [animeData, setAnimeData] = React.useState([]);
+    const [animeData, setAnimeData] = useState([]);
     const [viewMode, setViewMode] = useState('grid');
     const [loading, setLoading] = useState(true);
 

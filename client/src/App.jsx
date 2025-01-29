@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import AnimePage from "./pages/AnimePage.jsx";
+import MangaPage from "./pages/MangaPage.jsx";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
             <Route index element={<HomePage />} />
             <Route path="/anime" element={<AnimePage />} />
+            <Route path="/manga" element={<MangaPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/*" element={<NotFoundPage />} />

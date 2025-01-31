@@ -13,13 +13,16 @@ const MangaPage = () => {
 
     const fetchManga = async () => {
         try {
-            await axios.get("http://localhost:3000/api/manga").
-            then((response) => {setMangaData(response.data)})
+            getData();
         } catch (error) {
             console.log("Error fetching manga", error);
         } finally {
             setLoading(false);
         }
+    }
+
+    const getData = async () => {
+        await axios.get("http://localhost:3000/api/manga").then((response) => {setMangaData(response.data)});
     }
 
     useEffect(() => {
@@ -45,7 +48,9 @@ const MangaPage = () => {
             {loading ? (
                 <Spinner />
             ) : (
-                <List dataList={mangaData} viewMode={viewMode} />
+                <>
+                    <List dataList={mangaData} viewMode={viewMode} />
+                </>
             )}
         </div>
     )

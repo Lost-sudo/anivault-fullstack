@@ -11,14 +11,17 @@ const AnimePage = () => {
 
     const fetchAnime = async () => {
         try {
-            await axios.get("http://localhost:3000/api/anime").
-                then((response) => {setAnimeData(response.data)});
+            getData();
         } catch (error) {
             console.log("Error fetching data from the server: ", error);
         } finally {
             setLoading(false);
         }
     };
+
+    const getData = async () => {
+        await axios.get("http://localhost:3000/api/anime").then((res) => {setAnimeData(res.data)});
+    }
 
     useEffect(() => {
         fetchAnime();

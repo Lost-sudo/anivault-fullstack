@@ -1,4 +1,4 @@
-import { fetchData } from "../../utils/api_utility.js";
+import { fetchData } from "../../services/API_Services.js";
 
 class AnimeController {
     async getAnime(req, res) {

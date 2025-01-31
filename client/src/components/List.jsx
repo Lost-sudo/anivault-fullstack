@@ -6,7 +6,7 @@ const List = ({ dataList, viewMode }) => {
             {dataList.map((data) => (
                 <div
                     key={data.mal_id}
-                    className={`cursor-pointer transition-shadow hover:shadow-lg ${viewMode === 'grid' ? 'border p-4 rounded-lg' : 'flex items-center border p-4 rounded-lg'}`}
+                    className={`cursor-pointer transition-transform transform hover:scale-105 duration-300 ease-in-out ${viewMode === 'grid' ? 'border p-4 rounded-lg' : 'flex items-center border p-4 rounded-lg'}`}
                 >
                     <img
                         src={data.images.webp.image_url}

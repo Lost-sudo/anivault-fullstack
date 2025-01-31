@@ -7,6 +7,8 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import AnimePage from "./pages/AnimePage.jsx";
 import MangaPage from "./pages/MangaPage.jsx";
+import AnimeDetail from "./pages/AnimeDetail.jsx";
+import MangaDetail from "./pages/MangaDetail.jsx";
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
             <Route path="/manga" element={<MangaPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/anime-details" element={<AnimeDetail />} />
+            <Route path="/manga-details" element={<MangaDetail />} />
             <Route path="/*" element={<NotFoundPage />} />
         </Route>
     ))

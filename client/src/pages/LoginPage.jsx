@@ -5,8 +5,29 @@ const LoginPage = () => {
 
     const {register, handleSubmit, formState: { errors }} = useForm();
 
-    const onSubmit = (data) => {
-        console.log("Form data", data);
+    const onSubmit = async (data) => {
+        try {
+            const response = await fetch("http://localhost:3000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem("token", result.token);
+                alert("Login successfully");
+                window.location.href = "/";
+            } else {
+                alert(result.error || "Login failed.");
+            }
+        } catch (error) {
+            console.log(error);
+            alert("Something went wrong!");
+        }
     }
 
     return (
@@ -15,12 +36,12 @@ const LoginPage = () => {
                 <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" {...register("username", { required: "Username is required" })}
-                            className={`w-full p-3 border ${errors.username ? "border-red-500 focus:ring-red-500" : "border-gray-500 focus:ring-indigo-500"} rounded-lg `}
+                        <label className="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" {...register("email", { required: "Email is required" })}
+                            className={`w-full p-3 border ${errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-500 focus:ring-indigo-500"} rounded-lg `}
                         />
-                        {errors.username && (
-                            <p className="text-sm font-medium text-gray-700">{errors.username.message}</p>
+                        {errors.email && (
+                            <p className="text-sm font-medium text-gray-700">{errors.email.message}</p>
                         )}
                     </div>
                     <div className="mb-6">
@@ -28,7 +49,7 @@ const LoginPage = () => {
                         <input type="password" {...register("password", { required: "Password is required" })}
                                className={`w-full p-3 border ${errors.password ? "border-red-500 focus:ring-red-500" : "border-gray-500 focus:ring-indigo-500"} rounded-lg `}
                         />
-                        {errors.username && (
+                        {errors.password && (
                             <p className="text-sm font-medium text-gray-700">{errors.password.message}</p>
                         )}
                     </div>

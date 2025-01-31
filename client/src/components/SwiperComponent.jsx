@@ -7,7 +7,7 @@ import { Navigation } from "swiper/modules";
 
 const SwiperComponent = ({ data, title, description }) => {
     return (
-        <div className="max-w-10xl mx-auto px-4 py-10">
+        <div className="max-w-10xl p-10">
             {/* Header Section */}
             <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-gray-800">{title}</h2>
@@ -39,9 +39,9 @@ const SwiperComponent = ({ data, title, description }) => {
                                 <p className="text-gray-600 text-base mb-4">
                                     {item.synopsis ? item.synopsis.substring(0, 100) + "..." : "No Synopsis Available"}
                                 </p>
-                                <button className="bg-indigo-600 text-white rounded-lg px-5 py-2 hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50">
-                                    Learn More
-                                </button>
+                                {/*<button className="bg-indigo-600 text-white rounded-lg px-5 py-2 hover:bg-indigo-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-opacity-50">*/}
+                                {/*    Learn More*/}
+                                {/*</button>*/}
                             </div>
                         </div>
                     </SwiperSlide>

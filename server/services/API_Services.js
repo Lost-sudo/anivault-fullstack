@@ -20,3 +20,4 @@ export const fetchData = async (endpoint) => {
         throw new Error("Invalid URL.");
     }
 };
+

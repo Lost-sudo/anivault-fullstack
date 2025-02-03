@@ -36,8 +36,8 @@ const HomePage = () => {
                 <Spinner />
             ) : (
                 <>
-                    <SwiperComponent data={animeData} title="Top Anime" description="Check out the latest and top-rated anime" />
-                    <SwiperComponent data={mangaData} title="Top Manga" description="Check out the latest and top-rated manga" />
+                    <SwiperComponent data={animeData} title="Top Anime" description="Check out the latest and top-rated anime" navigateTo="anime" />
+                    <SwiperComponent data={mangaData} title="Top Manga" description="Check out the latest and top-rated manga" navigateTo="manga" />
                 </>
             )}
         </section>

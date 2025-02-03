@@ -1,50 +1,34 @@
-import User from '../../models/User.js';
-import { generateToken }  from "../../config/jwt.js";
-import bcrypt from "bcrypt";
-import passport from "passport";
+import UserService from "../../services/UserService.js";
+import AuthService from "../../services/AuthService.js";
 
 class AuthController {
     static async register(req, res) {
         const { email, password } = req.body;
-        console.log("Email received:", email);
-
         try {
-            // Check if user already exists
-            const existingUser = await User.findByEmail(email);
-            console.log("Existing user:", existingUser);
-
-            if (existingUser !== null) {
-                // User exists
-                return res.status(409).json({ message: 'User already exists' });
+            const newUser = await UserService.register(email, password);
+            if (!newUser) {
+                res.status(409).send({message: "User already registered" });
             }
-
-            // Create new user
-            const newUser = await User.createUser(email, password);
-            console.log("New user created:", newUser);
-
-            const token = generateToken(newUser);
+            const token = await AuthService.generateTokenForUser(newUser);
             res.status(201).json({ message: 'User created successfully', token });
         } catch (error) {
-            console.error("Error during registration:", error); // Log the error for debugging
             res.status(500).json({ message: "Server Error", error });
         }
     }
 
 
     static async login(req, res, next) {
-       const authMiddleware = passport.authenticate('local', {session: false}, (err, user, info) => {
-           if (err) {
-               return next(err);
-           }
-           if (!user) {
-               return res.status(401).json({ message: 'Invalid credentials' });
-           }
-           const token = generateToken(user);
+       try {
+           const authResult = await AuthService.authenticateUser(req, res, next);
 
-           res.json({ message: "Login successfully", token });
-       })
+           if (!authResult) {
+               return res.status(401).send({message: "Invalid user credentials" });
+           }
 
-        authMiddleware(req, res, next);
+           res.json({message: "User logged in successfully", token: authResult.token});
+       } catch (error) {
+           next(error);
+       }
     }
 }
 

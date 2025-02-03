@@ -1,60 +1,34 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React from "react";
 import SwiperComponent from "./SwiperComponent.jsx";
 
-const DataDetails = () => {
-
-    // Sample delete this later
-    const [animeData, setAnimeData] = useState([]);
-    const [mangaData, setMangaData] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    // Fetch Anime and Manga Data in Parallel
-    const fetchData = async () => {
-        try {
-            const [animeRes, mangaRes] = await Promise.all([
-                axios.get("http://localhost:3000/api/top/anime"),
-                axios.get("http://localhost:3000/api/top/manga")
-            ]);
-            setAnimeData(animeRes.data);
-            setMangaData(mangaRes.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    // end here
+const DataDetails = ({ data, relatedData, title, description }) => {
     return (
         <div className="container mx-auto p-8">
             <div className="flex items-start justify-center gap-10">
                 <div className="w-1/3">
                     <img className="h-auto w-full rounded-lg shadow-lg"
-                         src="https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png"
-                         alt="img"/>
+                         src={data?.images?.webp?.image_url}
+                         alt={data.title || "Anime Image"}/>
                 </div>
                 <div className="w-2/3">
-                    <h1 className="text-4xl font-bold text-gray-800">Anime Title</h1>
+                    <h1 className="text-4xl font-bold text-gray-800">{data.title || "No title available"}</h1>
                     <div className="mt-2">
-                        <p className="text-gray-600">Genres: Isekai, Comedy, Love</p>
+                        <p className="text-gray-600">
+                            {Array.isArray(data.genres) && data.genres.length > 0
+                                ? data.genres.map((genre) => genre.name).join(", ")
+                                : "No genres available"}
+                        </p>
+
                     </div>
                     <div className="mt-4">
                         <h2 className="text-2xl font-semibold text-gray-800">Synopsis:</h2>
-                        <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed semper
-                            sem sed posuere placerat. Pellentesque felis lorem, efficitur quis turpis quis, porttitor
-                            tempus ante. Curabitur id lectus laoreet, porttitor mauris pulvinar, tincidunt arcu. Mauris
-                            eu cursus justo. Duis dapibus libero ut nisi malesuada condimentum. Donec condimentum est
-                            nulla, vel imperdiet est congue a. Donec bibendum nunc a mollis vestibulum. Vivamus dapibus
-                            varius ligula, id pharetra nisl molestie non.</p>
+                        <p className="text-gray-600">{data.synopsis || "No synopsis available."}</p>
                     </div>
                 </div>
             </div>
-            <SwiperComponent data={animeData} title="Top Anime" description="Check out the latest and top-rated anime" />
+            {relatedData && (
+                <SwiperComponent data={relatedData} title={title} description={description} />
+            )}
             <div className="flex justify-items-start gap-10 mt-12">
                 <h2 className="text-3xl font-bold text-center text-gray-800">
                     Comments:

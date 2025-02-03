@@ -19,7 +19,8 @@ function App() {
             <Route path="/manga" element={<MangaPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/anime-details" element={<AnimeDetail />} />
+            <Route path="/anime/:id" element={<AnimeDetail />} />
+            <Route path="/manga/:id" element={<MangaDetail />}  />
             <Route path="/manga-details" element={<MangaDetail />} />
             <Route path="/*" element={<NotFoundPage />} />
         </Route>

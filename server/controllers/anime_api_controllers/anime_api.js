@@ -41,6 +41,17 @@ class AnimeController {
         }
     }
 
+    async getAnimeById(req, res) {
+        try {
+            const { id } = req.params;
+            const animeById = await fetchData(`/anime/${id}/`);
+            res.json(animeById);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: "Failed to fetch anime" });
+        }
+    }
+
     async getAnimeReviews(req, res) {
         try {
             const { id } = req.params;
@@ -56,6 +67,7 @@ class AnimeController {
         try {
             const { id } = req.params;
             const animeRelations = await fetchData(`/anime/${id}/relations`);
+            console.log(animeRelations);
             res.json(animeRelations);
         } catch (error) {
             console.error(error);

@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 class User {
     static async findByEmail(email) {
         const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
-        // Return null if no user is found, otherwise return the user object (first row)
         return result.rows.length > 0 ? result.rows[0] : null;
     }
     static async createUser(email, password) {

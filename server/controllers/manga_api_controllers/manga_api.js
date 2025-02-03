@@ -41,6 +41,17 @@ class MangaController {
         }
     }
 
+    async getMangaById(req, res) {
+        try {
+            const { id } = req.params;
+            const mangaById = await fetchData(`/manga/${id}`);
+            res.json(mangaById);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ message: "Failed to fetch manga" });
+        }
+    }
+
     async getMangaReviews(req, res) {
         try {
             const { id } = req.params;

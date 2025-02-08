@@ -43,7 +43,7 @@ const AnimePage = () => {
             {loading ? (
                 <Spinner />
             ) : (
-                <List dataList={animeData} viewMode={viewMode} />
+                <List dataList={animeData} viewMode={viewMode} navigateTo="/" />
             )}
         </div>
     );

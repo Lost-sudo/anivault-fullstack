@@ -7,6 +7,7 @@ import MangaRoutes from "./routes/manga_routes/manga_routes.js";
 import authRoutes from "./routes/auth_routes/AuthRoutes.js";
 
 import passport from "./config/passport.js"
+import DB_routes from "./routes/DB_routes/DB_routes.js";
 
 dotenv.config();
 
@@ -20,5 +21,7 @@ app.use("/", AnimeRoutes);
 app.use("/", MangaRoutes);
 
 app.use("/", authRoutes)
+
+app.use("/", DB_routes);
 
 export default app;

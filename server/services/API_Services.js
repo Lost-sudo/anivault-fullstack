@@ -10,7 +10,7 @@ if (!BASE_URL) {
 }
 
 const cache = {};
-const cacheTTL = 60 * 2000;
+const cacheTTL = 60 * 1000 * 60;
 
 const dataFetcher = (endpoint) => {
     if (!endpoint || typeof endpoint !== "string") {

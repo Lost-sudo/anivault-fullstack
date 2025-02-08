@@ -67,7 +67,6 @@ class AnimeController {
         try {
             const { id } = req.params;
             const animeRelations = await fetchData(`/anime/${id}/relations`);
-            console.log(animeRelations);
             res.json(animeRelations);
         } catch (error) {
             console.error(error);

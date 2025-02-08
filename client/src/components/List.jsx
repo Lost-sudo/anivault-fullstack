@@ -1,12 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const List = ({ dataList, viewMode }) => {
+const List = ({ dataList, viewMode, navigateTo }) => {
+    const navigate = useNavigate();
+
     return (
         <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4' : 'space-y-4'}>
             {dataList.map((data) => (
                 <div
                     key={data.mal_id}
                     className={`cursor-pointer transition-transform transform hover:scale-105 duration-300 ease-in-out ${viewMode === 'grid' ? 'border p-4 rounded-lg' : 'flex items-center border p-4 rounded-lg'}`}
+                    onClick={() => navigate(`${data.mal_id}`)}
                 >
                     <img
                         src={data.images.webp.image_url}

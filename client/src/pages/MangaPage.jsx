@@ -27,9 +27,7 @@ const MangaPage = () => {
 
     useEffect(() => {
         fetchManga();
-
-        console.log(mangaData);
-    })
+    }, []);
 
 
     return (
@@ -49,7 +47,7 @@ const MangaPage = () => {
                 <Spinner />
             ) : (
                 <>
-                    <List dataList={mangaData} viewMode={viewMode} />
+                    <List dataList={mangaData} viewMode={viewMode} navigateTo="/" />
                 </>
             )}
         </div>

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DataDetails from "../components/DataDetails.jsx";
+import Spinner from "../components/Spinner.jsx";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const MangaDetail = () => {
     const [selectedManga, setSelectedManga] = useState({});
     const [relatedManga, setRelatedManga] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
     const fetchData = async (url) => {
@@ -15,6 +17,8 @@ const MangaDetail = () => {
         } catch (error) {
             console.error(`Error fetching ${url}:`, error);
             return null;
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -33,7 +37,9 @@ const MangaDetail = () => {
         loadRelatedManga();
     }, [id]);
 
-    return (
+    return loading ? (
+        <Spinner />
+        ) : (
         <div className="pt-20">
             <DataDetails
                 data={selectedManga}

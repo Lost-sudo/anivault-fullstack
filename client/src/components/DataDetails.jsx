@@ -1,7 +1,8 @@
 import React from "react";
 import SwiperComponent from "./SwiperComponent.jsx";
+import AddToListButton from "./AddToListButton.jsx";
 
-const DataDetails = ({ data, relatedData, title, description }) => {
+const DataDetails = ({ data, relatedData, title, description, navigateTo }) => {
     return (
         <div className="container mx-auto p-8">
             <div className="flex items-start justify-center gap-10">
@@ -11,7 +12,10 @@ const DataDetails = ({ data, relatedData, title, description }) => {
                          alt={data.title || "Anime Image"}/>
                 </div>
                 <div className="w-2/3">
-                    <h1 className="text-4xl font-bold text-gray-800">{data.title || "No title available"}</h1>
+                   <div className="flex items-center justify-between gap-4">
+                       <h1 className="text-4xl font-bold text-gray-800">{data.title || "No title available"}</h1>
+                       <AddToListButton data={data}  />
+                   </div>
                     <div className="mt-2">
                         <p className="text-gray-600">
                             {Array.isArray(data.genres) && data.genres.length > 0
@@ -27,20 +31,8 @@ const DataDetails = ({ data, relatedData, title, description }) => {
                 </div>
             </div>
             {relatedData && (
-                <SwiperComponent data={relatedData} title={title} description={description} />
+                <SwiperComponent data={relatedData} title={title} description={description} navigateTo={navigateTo} />
             )}
-            <div className="flex justify-items-start gap-10 mt-12">
-                <h2 className="text-3xl font-bold text-center text-gray-800">
-                    Comments:
-                </h2>
-            </div>
-            <div className="flex justify-items-start gap-10">
-                <textarea name="" id="" cols="10" rows="1" className="w-full p-4 mt-4 border rounded-lg"
-                          placeholder="Leave a comment"></textarea>
-                <button className="bg-blue-600 text-white py-2 px-6 mt-4 rounded-lg">
-                    Submit
-                </button>
-            </div>
         </div>
 
     )

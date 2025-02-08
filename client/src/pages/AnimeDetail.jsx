@@ -2,10 +2,12 @@ import React, {useState, useEffect} from "react";
 import DataDetails from "../components/DataDetails.jsx";
 import {useParams} from "react-router-dom";
 import axios from "axios";
+import Spinner from "../components/Spinner.jsx";
 
 const AnimeDetail = () => {
     const [selectedAnime, setSelectedAnime] = useState({});
     const [relatedAnime, setRelatedAnime] = useState([]);
+    const [loading, setLoading] = useState(true);
     const { id } = useParams();
 
     const fetchData = async (url) => {
@@ -15,6 +17,8 @@ const AnimeDetail = () => {
         } catch (error) {
             console.error(`Error fetching ${url}`, error);
             return null;
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -33,11 +37,19 @@ const AnimeDetail = () => {
         loadRelatedAnime();
     }, [id]);
 
-    return (
+    return loading ? (
+        <Spinner />
+    ) : (
         <div className="pt-20">
-            <DataDetails data={selectedAnime} relatedData={relatedAnime} title="Related Anime" description="Check out the related anime" />
+            <DataDetails
+                data={selectedAnime}
+                relatedData={relatedAnime}
+                title="Related Anime"
+                description="Check out the related anime"
+                navigateTo="/anime"
+            />
         </div>
-    )
+    );
 }
 
 export default AnimeDetail;
